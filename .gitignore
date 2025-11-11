@@ -1,0 +1,51 @@
+# Entorno virtual
+venv/
+env/
+*.pyc
+*.pyo
+__pycache__/
+
+# Archivos de base de datos
+db.sqlite3
+
+# Archivos de migraciones (opcional, a veces se versionan)
+*/migrations/*.py
+*/migrations/*.pyc
+!*/migrations/__init__.py
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Configuración local de Django
+*.log
+*.pot
+*.py[cod]
+*.swp
+*.swo
+*.bak
+
+# Archivos de entorno
+.env
+*.env
+
+# Archivos de compilación de frontend (si usas npm, yarn, etc.)
+node_modules/
+dist/
+build/
+
+# Archivos de PyCharm
+.idea/
+
+# Archivos de VSCode
+.vscode/
+
+# Archivos de coverage
+htmlcov/
+.coverage
+
+# Archivos de pruebas
+*.cover
+nosetests.xml
+coverage.xml
+*.pytest_cache/

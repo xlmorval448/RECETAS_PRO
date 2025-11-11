@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %} <!--No declara HTML ni nada por que se extiende de la plantilla base.html-->
+
+    {% block titulo%} INICIO {% endblock %} <!--Esto es un h1-->
+
+    {% block contenido %} <!--Esto es el body-->
+
+    <p>Listado libros:</p>
+    <ul>
+        {% for e in entradas %}
+        <li><a href="{% url 'detalle_post' pk=e.pk %}">{{e.titulo}} ({{e.autor}})</a></li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'autores' %}">Ver autores</a></p>
+
+    <p>Listado autores:</p>
+    <ul>
+        {% for a in autor %}
+        <li><a href="{% url 'post_autor' autor_pk=a.pk %}">{{a.nombre}} </a></li>
+        {% endfor %}
+    </ul>
+
+    {% endblock %}

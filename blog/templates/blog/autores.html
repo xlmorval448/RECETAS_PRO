@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+
+{% block titulo %}Autores{% endblock %}
+
+{% block contenido %}
+    <ul>
+        {% for a in autores %}
+        <li><a href="{% url 'post_autor' autor_pk=a.pk %}">{{a.nombre}}</a></li> <!--No enlaza bien con post_autor (que es lo que quiero)-->
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'inicio' %}">Volver a inicio</a></p>
+    
+{% endblock %}
