@@ -1,8 +1,8 @@
-{% extends 'blog/base.html' %} <!--No declara HTML ni nada por que se extiende de la plantilla base.html-->
+{% extends 'blog/base.html' %}
 
-    {% block titulo%} INICIO {% endblock %} <!--Esto es un h1-->
+    {% block titulo%} INICIO {% endblock %}
 
-    {% block contenido %} <!--Esto es el body-->
+    {% block contenido %}
 
     <p>Listado libros:</p>
     <ul>
@@ -12,6 +12,13 @@
     </ul>
 
     <p><a href="{% url 'autores' %}">Ver autores</a></p>
+
+    <form method="GET" action="">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre">
+    
+    <button type="submit">Enviar</button>
+</form>
 
     <p>Listado autores:</p>
     <ul>
