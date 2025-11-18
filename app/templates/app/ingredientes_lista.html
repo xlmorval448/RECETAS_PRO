@@ -1,0 +1,25 @@
+{% extends "app/base.html" %}
+
+{% block titulo%}Lista de Ingredientes{% endblock%}
+
+{% block contenido %}
+    <h2>Lista de Ingredientes</h2>
+
+    <form method="GET" action="{% url 'ingredientes_lista' %}"> 
+        <label for="{{ form.categoria.id_for_label }}">Categoria :</label>
+        {{ form.categoria }}
+        
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <hr>
+
+    <h3>Ingredientes Encontrados: </h3>
+        <ul>
+        {% for ingrediente in ingredientes %}
+            <li>
+                {{ ingrediente.nombre }}
+            </li>
+        {% endfor %}
+        </ul>
+{% endblock contenido %}
