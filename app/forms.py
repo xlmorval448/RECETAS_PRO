@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ingrediente, CategoriaIngrediente
+from .models import *
 
 
 class FiltroIngredientesForm(forms.ModelForm):
@@ -7,8 +7,12 @@ class FiltroIngredientesForm(forms.ModelForm):
         model = Ingrediente
         fields = ["categoria"]
 
-        categoria = forms.ModelChoiceField(
-            queryset=CategoriaIngrediente.objects.all(),
-            label="Filtrar por Categoría",
-            required=False,
-        )
+    categoria = forms.ModelChoiceField(
+        queryset=CategoriaIngrediente.objects.all(),
+        required=False,
+    )
+    
+    inicial_nombre = forms.CharField(
+        max_length=1,
+        required=False,
+    )

@@ -6,13 +6,13 @@
     <h2>Lista de Ingredientes</h2>
 
     <form method="GET" action="{% url 'ingredientes_lista' %}"> 
-        <label for="{{ form.categoria.id_for_label }}">Categoria :</label>
+        <label for="Categoria">Categoria :</label>
         {{ form.categoria }}
+        <label for="Inicial">Inicial :</label>
+        {{ form.inicial_nombre }}
         
         <button type="submit">Filtrar</button>
     </form>
-
-    <hr>
 
     <h3>Ingredientes Encontrados: </h3>
         <ul>
@@ -22,4 +22,5 @@
             </li>
         {% endfor %}
         </ul>
+    <a href="{% url 'ingredientes_lista' %}">Reiniciar</a>
 {% endblock contenido %}
