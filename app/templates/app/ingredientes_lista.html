@@ -3,24 +3,59 @@
 {% block titulo%}Lista de Ingredientes{% endblock%}
 
 {% block contenido %}
-    <h2>Lista de Ingredientes</h2>
+<h2>Lista de Ingredientes</h2>
 
-    <form method="GET" action="{% url 'ingredientes_lista' %}"> 
-        <label for="Categoria">Categoria :</label>
-        {{ form.categoria }}
-        <label for="Inicial">Inicial :</label>
-        {{ form.inicial_nombre }}
-        
-        <button type="submit">Filtrar</button>
-    </form>
-
-    <h3>Ingredientes Encontrados: </h3>
-        <ul>
-        {% for ingrediente in ingredientes %}
-            <li>
-                {{ ingrediente.nombre }}
-            </li>
-        {% endfor %}
-        </ul>
+<form method="GET" action="{% url 'ingredientes_lista' %}">
+    <label for="Inicial">Inicial :</label>
+    {{ form.inicial_nombre }}
+    <label for="Categoria">Categoria :</label>
+    {{ form.categoria }}
+    <label for="Mercado Habitual">Mercado Habitual :</label>
+    {{ form.mercado_habitual }}
+    <button type="submit">Filtrar</button>
     <a href="{% url 'ingredientes_lista' %}">Reiniciar</a>
+</form>
+
+<h3>Ingredientes Encontrados: </h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Mercado Habitual</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ingrediente in ingredientes %}
+        <tr>
+            <td>{{ ingrediente.id }}</td>
+            <td>{{ ingrediente.nombre }}</td>
+
+            <td>{{ ingrediente.categoria.nombre }}</td>
+            <td>{{ ingrediente.mercado_habitual.nombre }}</td>
+
+            <td>{{ ingrediente.descripcion }}</td>
+
+            <td class="acciones">
+
+                <a href="{% url 'ingrediente_crud' ingrediente.id %}" title="Ver detalle">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+
+                <a href="{% url 'ingrediente_crud' ingrediente.id %}" title="Editar">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+
+                <a href="{% url 'ingrediente_eliminar' ingrediente.id %}" title="Eliminar">
+                    <i class="fa-solid fa-trash-can"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock contenido %}

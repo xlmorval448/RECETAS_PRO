@@ -1,0 +1,93 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: white; 
+    color: black;
+    line-height: 1.6;
+}
+
+h2, h3 {
+    color: red; 
+    margin-left: 40px;
+}
+
+form {
+    align-self: flex-start;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px auto;
+    display: inline-block; 
+    width: 98%; 
+    border: 1px solid black; 
+    text-align: left; /* Alineamos todo a la izquierda */
+}
+
+/* AJUSTES CLAVE para que label e input/select queden en línea */
+form label {
+    font-weight: bold;
+    color: black;
+    margin-bottom: 5px;
+    /* Cambiar a inline-block para que no ocupe todo el ancho */
+    display: inline-block; 
+    background-color: white; 
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-align: left;
+    margin-right: 15px; /* Espacio entre grupos de input */
+}
+
+input, select {
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: 4px;
+    min-width: 150px;
+    background-color: white;
+    color: black;
+    /* Cambiar a inline-block para que quede al lado de su label */
+    display: inline-block; 
+    /* Quitar margin: auto */
+    margin: 5px 0; 
+}
+
+form button, form a {
+    background-color: red;
+    color: white;
+    padding: 10px 15px;
+    border: 1px solid red; 
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px 5px;
+}
+
+table {
+    width: 98%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+thead {
+    background-color: black; 
+    color: white;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 2px solid black;
+}
+
+td.acciones a {
+    color: red;
+    background: none; 
+    padding: 5px;
+    border: none; 
+    margin: 0 3px;
+}
