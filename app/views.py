@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .forms import *
+from django.forms import formset_factory
+
 
 # Create your views here.
 def ingredientes_lista(request):
@@ -46,3 +48,19 @@ def ingrediente_eliminar(request, pk):
         return redirect('ingredientes_lista') 
     
     return render(request, 'app/confirmar_borrado.html', {'ingrediente': ingrediente})
+
+def ingrediente_nuevo(request):
+    formularioCrud = formset_factory(CrudForm, extra=3)
+    
+    if request.method == 'POST':
+        formularios = formularioCrud(request.POST)
+        if formularios.is_valid():
+            for form in formularios:
+                if form.has_changed():
+                    form.save()
+            return redirect('ingredientes_lista')    
+        
+    else:
+        formularios = formularioCrud()
+
+    return render(request, "app/ingrediente_nuevo.html", {"formularios": formularios})

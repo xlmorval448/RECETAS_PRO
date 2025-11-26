@@ -7,12 +7,15 @@
 <form method="GET" action="{% url 'ingredientes_lista' %}">
     <label for="Inicial">Inicial :</label>
     {{ form.inicial_nombre }}
+    <br>
     <label for="Categoria">Categoria :</label>
     {{ form.categoria }}
+    <br>
     <label for="Mercado Habitual">Mercado Habitual :</label>
     {{ form.mercado_habitual }}
     <button type="submit">Filtrar</button>
     <a href="{% url 'ingredientes_lista' %}">Reiniciar</a>
+    <a href="{% url 'ingrediente_nuevo' %}">Añadir Ingrediente</a>
 </form>
 
 <h3>Ingredientes Encontrados: </h3>
