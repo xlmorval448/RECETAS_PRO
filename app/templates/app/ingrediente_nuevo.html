@@ -6,15 +6,8 @@
 
 <form method="POST">
     {% csrf_token %}
-
-    {{ formularios.management_form }}
-
-    {% for form in formularios %}
-        {{ form.as_p }}
-    {% endfor %}
-
+    {{formularios}}
     <button type="submit">Guardar Cambios</button>
-
     <a href="{% url 'ingredientes_lista' %}">Volver a la Lista</a>
 </form>
 
