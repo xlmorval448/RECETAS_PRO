@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from django.forms import formset_factory
 
 
 class FiltroIngredientesForm(forms.ModelForm):
@@ -25,4 +26,4 @@ class FiltroIngredientesForm(forms.ModelForm):
 class CrudForm(forms.ModelForm):
     class Meta:
         model = Ingrediente
-        fields = ["nombre", "categoria", "mercado_habitual", "descripcion"]
+        fields = ["nombre", "categoria", "mercado_habitual", "descripcion"] 

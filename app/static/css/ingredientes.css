@@ -18,11 +18,12 @@ form {
     background-color: white; 
     padding: 20px;
     border-radius: 12px; /* Bordes más redondeados */
-    display: inline-block; 
-    width: 70vw; 
+    width: auto; 
     /* Borde negro diferenciador */
+    width: 30vw;
     border: 2px solid #2f3640; 
     text-align: left; 
+    justify-content: space-evenly;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
@@ -57,7 +58,7 @@ input:focus, select:focus {
 }
 
 /* --- ESTILO DE BOTONES --- */
-form button, form a {
+button, form a {
     /* Color de botón primario: Azul grisáceo */
     background-color: #4a69bd;
     color: white;
@@ -71,7 +72,7 @@ form button, form a {
     display: inline-block;
     margin: 10px 5px;
 }
-form button:hover, form a:hover {
+button:hover, a:hover {
     background-color: #2f3640; /* Hover oscuro y elegante */
     border-color: #2f3640;
 }
