@@ -2,6 +2,12 @@ from django.db import models
 
 # Create your models here.
 
+class Receta(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    ingredientes = models.ManyToManyField("Ingrediente", related_name='recetas')
+
+
 class CategoriaIngrediente(models.Model):
     nombre = models.CharField(max_length=50)
     descripcion = models.TextField(blank=True, null=True)

@@ -91,7 +91,7 @@ table {
 
 thead {
     /* Cabecera diferenciadora: Gris oscuro (casi negro) */
-    background-color: #2f3640; 
+    background-color: #8b4dff; 
     color: white;
 }
 
@@ -99,6 +99,7 @@ th, td {
     padding: 15px;
     text-align: center;
     border-bottom: 1px solid #a4b0be; /* Líneas de separación suaves */
+    border: 2px solid rgb(0, 0, 0);
 }
 /* Estilo para filas pares (zebra) */
 tbody tr:nth-child(even) {

@@ -13,9 +13,9 @@ class FiltroIngredientesForm(forms.ModelForm):
         required=False,
     )
 
-    mercado_habitual = forms.ModelChoiceField(
-        queryset=Mercado.objects.all(),
-        required=False,
+    mercado_habitual = forms.ChoiceField(
+    choices=[('', '---')] + list(Ingrediente.MercadoOpcion.choices),
+    required=False,
     )
 
     inicial_nombre = forms.CharField(

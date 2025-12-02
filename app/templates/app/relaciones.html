@@ -1,0 +1,29 @@
+{% extends "app/base.html" %}
+
+{% block titulo%}Relaciones{% endblock%}
+
+{% block contenido %}
+
+<h1>RECETAS</h1>
+
+{% for receta in recetas %}
+<h2>{{ receta.nombre }}</h2>
+<ul>
+    {% for ingrediente in receta.ingredientes.all %}
+    <li>{{ ingrediente.nombre }}</li>
+    {% endfor %}
+</ul>
+{% endfor %}
+
+<h1>INGREDIENTES</h1>
+
+{% for ingrediente in ingredientes %}
+<h2>{{ ingrediente.nombre }}</h2>
+<ul>
+    {% for receta in ingrediente.recetas.all %}
+    <p><strong>{{ receta.nombre }}</strong></p>
+    {% endfor %}
+</ul>
+{% endfor %}
+
+{% endblock contenido %}

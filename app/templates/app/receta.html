@@ -1,0 +1,66 @@
+{% extends "app/base.html" %}
+
+{% block titulo%}Relaciones{% endblock%}
+
+{% block contenido %}
+
+
+<h1>{{ receta.nombre }}</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th colspan="4">Ingrediente</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ingrediente in receta.ingredientes.all %}
+        <tr>
+            <td>{{ ingrediente.id }}</td>
+            <td>{{ ingrediente.nombre }}</td>
+            <td>{{ ingrediente.categoria.nombre }}</td>
+            <td>{{ ingrediente.descripcion }}</td>
+            <td>
+                <form action="{% url 'receta' receta.pk %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="ingrediente_id" value="{{ ingrediente.id }}">
+                    <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
++
+<h1>AÑADIR INGREDIENTES</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th colspan="4">Ingrediente</th>
+            <th>Añadir</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ingrediente in ingredientes %}
+        <tr>
+            <td>{{ ingrediente.id }}</td>
+            <td>{{ ingrediente.nombre }}</td>
+            <td>{{ ingrediente.categoria.nombre }}</td>
+            <td>{{ ingrediente.descripcion }}</td>
+            <td>
+                <form action="{% url 'receta' receta.pk %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="ingrediente_id" value="{{ ingrediente.id }}">
+                    <button type="submit"><i class="fa-solid fa-plus"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'relaciones' %}">Volver a relaciones</a>
+
+{% endblock contenido %}

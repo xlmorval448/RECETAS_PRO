@@ -64,3 +64,30 @@ def ingrediente_nuevo(request):
         formularios = formularioCrud()
 
     return render(request, "app/ingrediente_nuevo.html", {"formularios": formularios})
+
+def relaciones(request):
+    recetas = Receta.objects.all()
+    ingredientes =  Ingrediente.objects.all()
+    return render(request, "app/relaciones.html", {"recetas":recetas,"ingredientes":ingredientes})
+
+def receta(request, pk):
+    receta = get_object_or_404(Receta, pk=pk)
+    ingredientes =  Ingrediente.objects.exclude(id__in=receta.ingredientes.all())
+
+    if request.method == 'POST':
+        ingrediente = request.POST.get('ingrediente_id')
+        receta.ingredientes.add(ingrediente)
+        return redirect('receta', pk=pk)
+    
+    return render(request, 'app/receta.html', {'receta': receta,"ingredientes":ingredientes})
+
+def eliminar_ingrediente_receta(request, pk):
+    receta = get_object_or_404(Receta, pk=pk)
+    ingredientes =  Ingrediente.objects.exclude(id__in=receta.ingredientes.all())
+
+    if request.method == 'POST':
+        ingrediente = request.POST.get('ingrediente_id')
+        receta.ingredientes.add(ingrediente)
+        return redirect('receta', pk=pk)
+    
+    return render(request, 'app/receta.html', {'receta': receta,"ingredientes":ingredientes})
