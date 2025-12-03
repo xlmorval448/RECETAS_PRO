@@ -7,6 +7,9 @@ class Receta(models.Model):
     descripcion = models.TextField()
     ingredientes = models.ManyToManyField("Ingrediente", related_name='recetas', through="IngredienteReceta")
 
+    def __str__(self):
+        return f"{self.nombre}" 
+
 class CategoriaIngrediente(models.Model):
     nombre = models.CharField(max_length=50)
     descripcion = models.TextField(blank=True, null=True)
@@ -48,3 +51,6 @@ class IngredienteReceta(models.Model):
     
     class Meta:
         unique_together = ('receta', 'ingrediente')
+
+    def str(self):
+        return f"{self.ingrediente.nombre} en {self.receta.nombre} ({self.cantidad} {self.medida})"

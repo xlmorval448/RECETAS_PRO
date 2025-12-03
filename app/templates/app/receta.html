@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for relacion in receta.ingredientereceta_set.all %}
+        {% for relacion in ingrediente_receta %}
         <tr>
             <td>{{ relacion.ingrediente.nombre }}</td>
             <td>{{ relacion.cantidad }}</td>
@@ -36,30 +36,12 @@
 
 <h1>AÑADIR INGREDIENTES</h1>
 
-<table>
-    <thead>
-        <tr>
-            <th>Ingrediente</th>
-            <th>Añadir</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for ingrediente in ingredientes %}
-        <tr>
-            <td>{{ ingrediente.nombre }}</td>
-            <td>
                 <form action="{% url 'receta' receta.pk %}" method="POST">
                     {% csrf_token %}
-                    {{ form.cantidad }}
-                    <input type="hidden" name="ingrediente_id" value="{{ ingrediente.id }}">
+                    {{ formulario.as_p }}
                     <button type="submit"><i class="fa-solid fa-plus"></i></button>
                 </form>
             </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
 <a href="{% url 'relaciones' %}">Volver a relaciones</a>
 
 {% endblock contenido %}

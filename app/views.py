@@ -65,68 +65,39 @@ def ingrediente_nuevo(request):
 
     return render(request, "app/ingrediente_nuevo.html", {"formularios": formularios})
 
+
 def relaciones(request):
     recetas = Receta.objects.all()
     ingredientes =  Ingrediente.objects.all()
     return render(request, "app/relaciones.html", {"recetas":recetas,"ingredientes":ingredientes})
 
 def receta(request, pk):
-    receta_obj = get_object_or_404(Receta, pk=pk)
-    # Obtenemos todos los objetos IngredienteReceta relacionados con la receta
-    ingredientes_receta = receta_obj.ingredientereceta_set.all()
-    
+    receta = get_object_or_404(Receta, pk=pk)
+    ingredientes =  Ingrediente.objects.exclude(recetas = receta)
+    formulario = IngredienteRecetaForm(request.POST)
+    formulario.fields['ingrediente'].queryset = ingredientes
+    ingrediente_receta = IngredienteReceta.objects.filter(receta=receta)
+
     if request.method == 'POST':
-        # Instanciamos el formulario con los datos POST
-        form = IngredienteRecetaForm(request.POST)
-        
-        if form.is_valid():
-            # Obtenemos los datos limpios
-            nueva_cantidad = form.cleaned_data['cantidad']
-            ingrediente_obj = form.cleaned_data['ingrediente'] # Objeto Ingrediente
-            nueva_medida = form.cleaned_data['medida'] # Nueva medida (se usará si se crea o actualiza)
-
-            try:
-                # 1. Intentar encontrar un IngredienteReceta existente para esta Receta y este Ingrediente
-                ingrediente_receta_existente = IngredienteReceta.objects.get(
-                    receta=receta_obj,
-                    ingrediente=ingrediente_obj
-                )
-
-                # 2. Si existe: Usamos F() para realizar la suma de forma atómica en la base de datos.
-                # Esto es más seguro, especialmente en entornos concurrentes.
-                ingrediente_receta_existente.cantidad = F('cantidad') + nueva_cantidad
-                ingrediente_receta_existente.medida = nueva_medida # Opcionalmente, actualizamos la medida
-                ingrediente_receta_existente.save()
-                
-                # Nota: Es recomendable llamar a .refresh_from_db() si se necesita el valor actualizado 
-                # de 'cantidad' inmediatamente en esta vista, aunque para el redirect no es necesario.
-                
-            except ObjectDoesNotExist:
-                # 3. Si no existe: Creamos un nuevo IngredienteReceta.
-                nuevo_ingrediente_receta = form.save(commit=False)
-                nuevo_ingrediente_receta.receta = receta_obj
-                # Los campos 'ingrediente', 'cantidad' y 'medida' ya están seteados por form.save(commit=False)
-                nuevo_ingrediente_receta.save()
-                
-            # Redirigir a la misma página para ver los cambios y limpiar el formulario
-            return redirect('receta', pk=pk)
+        ingrediente_receta = formulario.save(commit=False)
+        ingrediente_receta.receta = receta
+        ingrediente_receta.save()
+        return redirect('receta', pk=pk)
     else:
-        form = IngredienteRecetaForm() # Formulario vacío para GET
+        formulario = IngredienteRecetaForm()
 
-    # Renderizar la plantilla con los datos necesarios
-    return render(request, 'app/receta.html', {
-        'receta': receta_obj,
-        'ingredientes': ingredientes_receta,
-        'form': form
-    })
+    formulario.fields['ingrediente'].queryset = ingredientes
+    contexto = {'receta': receta, "ingredientes":ingredientes, 'ingrediente_receta':ingrediente_receta, 'formulario':formulario}
+    return render(request, 'app/receta.html', contexto)
+
 
 # def eliminar_ingrediente_receta(request, pk):
 #     receta = get_object_or_404(Receta, pk=pk)
-#     ingredientes =  Ingrediente.objects.exclude(id__in=receta.ingredientes.all())
+#     ingredientes =  Ingrediente.objects.exclude(recetas = receta)
 
 #     if request.method == 'POST':
 #         ingrediente = request.POST.get('ingrediente_id')
 #         receta.ingredientes.add(ingrediente)
 #         return redirect('receta', pk=pk)
-
+    
 #     return render(request, 'app/receta.html', {'receta': receta,"ingredientes":ingredientes})
