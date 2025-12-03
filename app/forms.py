@@ -27,3 +27,8 @@ class CrudForm(forms.ModelForm):
     class Meta:
         model = Ingrediente
         fields = ["nombre", "categoria", "mercado_habitual", "descripcion"] 
+
+class IngredienteRecetaForm(forms.ModelForm):
+    class Meta:
+        model = IngredienteReceta
+        fields = ["ingrediente","cantidad", "medida"]

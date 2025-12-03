@@ -10,21 +10,22 @@
 <table>
     <thead>
         <tr>
-            <th colspan="4">Ingrediente</th>
+            <th>Ingrediente</th>
+            <th colspan="2">Cantidad</th>
             <th>Eliminar</th>
         </tr>
     </thead>
     <tbody>
-        {% for ingrediente in receta.ingredientes.all %}
+        {% for relacion in receta.ingredientereceta_set.all %}
         <tr>
-            <td>{{ ingrediente.id }}</td>
-            <td>{{ ingrediente.nombre }}</td>
-            <td>{{ ingrediente.categoria.nombre }}</td>
-            <td>{{ ingrediente.descripcion }}</td>
+            <td>{{ relacion.ingrediente.nombre }}</td>
+            <td>{{ relacion.cantidad }}</td>
+            <td>{{ relacion.medida }}</td>
             <td>
                 <form action="{% url 'receta' receta.pk %}" method="post">
                     {% csrf_token %}
-                    <input type="hidden" name="ingrediente_id" value="{{ ingrediente.id }}">
+                    {{ form.cantidad}}
+                    <input type="hidden" name="ingrediente_id" value="{{ relacion.ingrediente.id }}">
                     <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
                 </form>
             </td>
@@ -32,26 +33,24 @@
         {% endfor %}
     </tbody>
 </table>
-+
+
 <h1>AÑADIR INGREDIENTES</h1>
 
 <table>
     <thead>
         <tr>
-            <th colspan="4">Ingrediente</th>
+            <th>Ingrediente</th>
             <th>Añadir</th>
         </tr>
     </thead>
     <tbody>
         {% for ingrediente in ingredientes %}
         <tr>
-            <td>{{ ingrediente.id }}</td>
             <td>{{ ingrediente.nombre }}</td>
-            <td>{{ ingrediente.categoria.nombre }}</td>
-            <td>{{ ingrediente.descripcion }}</td>
             <td>
                 <form action="{% url 'receta' receta.pk %}" method="POST">
                     {% csrf_token %}
+                    {{ form.cantidad }}
                     <input type="hidden" name="ingrediente_id" value="{{ ingrediente.id }}">
                     <button type="submit"><i class="fa-solid fa-plus"></i></button>
                 </form>

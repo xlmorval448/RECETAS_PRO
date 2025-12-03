@@ -22,9 +22,13 @@ form {
     /* Borde negro diferenciador */
     border: 2px solid #2f3640; 
     text-align: left; 
-    max-width: 20%;
     justify-content: space-evenly;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+table form {
+    display: flex;
+    flex-direction: column;
 }
 
 /* AJUSTES CLAVE para que label e input/select queden en línea */
@@ -58,7 +62,7 @@ input:focus, select:focus {
 }
 
 /* --- ESTILO DE BOTONES --- */
-button, form a {
+button, a {
     /* Color de botón primario: Azul grisáceo */
     background-color: #4a69bd;
     color: white;
