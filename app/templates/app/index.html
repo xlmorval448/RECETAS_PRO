@@ -14,8 +14,13 @@
     <label for="Mercado Habitual">Mercado Habitual :</label>
     {{ form.mercado_habitual }}
     <button type="submit">Filtrar</button>
+    <br>
     <a href="{% url 'ingredientes_lista' %}">Reiniciar</a>
     <a href="{% url 'ingrediente_nuevo' %}">Añadir Ingrediente</a>
+</form>
+
+<form action="">
+<a href="{% url 'relaciones' %}">Ver recetas</a>
 </form>
 
 <h3>Ingredientes Encontrados: </h3>

@@ -23,7 +23,7 @@ def ingredientes_lista(request):
         if inicial_seleccionada:
             ingredientes = ingredientes.filter(nombre__istartswith=inicial_seleccionada)
 
-    return render(request, "app/ingredientes_lista.html", {'ingredientes': ingredientes,'form': form})
+    return render(request, "app/index.html", {'ingredientes': ingredientes,'form': form})
 
 
 def ingrediente_crud(request, pk):
