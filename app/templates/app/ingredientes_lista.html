@@ -3,25 +3,7 @@
 {% block titulo%}Lista de Ingredientes{% endblock%}
 
 {% block contenido %}
-
-<form method="GET" action="{% url 'ingredientes_lista' %}">
-    <label for="Inicial">Inicial :</label>
-    {{ form.inicial_nombre }}
-    <br>
-    <label for="Categoria">Categoria :</label>
-    {{ form.categoria }}
-    <br>
-    <label for="Mercado Habitual">Mercado Habitual :</label>
-    {{ form.mercado_habitual }}
-    <button type="submit">Filtrar</button>
-    <br>
-    <a href="{% url 'ingredientes_lista' %}">Reiniciar</a>
-    <a href="{% url 'ingrediente_nuevo' %}">Añadir Ingrediente</a>
-</form>
-
-<a href="{% url 'relaciones' %}">Ver recetas</a>
-
-<h3>Ingredientes Encontrados: </h3>
+<h3>Ingredientes: </h3>
 
 <table>
     <thead>
@@ -39,19 +21,17 @@
         <tr>
             <td>{{ ingrediente.id }}</td>
             <td>{{ ingrediente.nombre }}</td>
-
             <td>{{ ingrediente.categoria.nombre }}</td>
             <td>{{ ingrediente.get_mercado_habitual_display }}</td>
-
             <td>{{ ingrediente.descripcion }}</td>
 
             <td class="acciones">
 
-                <a href="{% url 'ingrediente_crud' ingrediente.id %}" title="Ver detalle">
+                <a href="{% url 'ingrediente_mostrar' ingrediente.id %}" title="Ver detalle">
                     <i class="fa-solid fa-eye"></i>
                 </a>
 
-                <a href="{% url 'ingrediente_crud' ingrediente.id %}" title="Editar">
+                <a href="{% url 'ingrediente_editar' ingrediente.id %}" title="Editar">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
 
@@ -63,4 +43,6 @@
         {% endfor %}
     </tbody>
 </table>
+
+<a href="{% url 'ingrediente_nuevo' %}" title="Editar"><button>Crear Nuevo Ingrediente</button></a>
 {% endblock contenido %}

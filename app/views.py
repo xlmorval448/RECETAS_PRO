@@ -1,95 +1,71 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.forms import formset_factory
 from .models import *
 from .forms import *
-from django.forms import formset_factory
-
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 # Create your views here.
-def ingredientes_lista(request):
-    form = FiltroIngredientesForm(request.GET)
-    ingredientes = Ingrediente.objects.all()
+class IngredienteListaView(ListView):
+    template_name = "app/ingredientes_lista.html"
+    context_object_name = "ingredientes"
+    model = Ingrediente
 
-    if form.is_valid():
-        categoria_seleccionada = form.cleaned_data.get('categoria')
-        inicial_seleccionada = form.cleaned_data.get('inicial_nombre')
-        mercado_habitual = form.cleaned_data.get('mercado_habitual')
+class IngredienteMostrarView(DetailView):
+    template_name = "app/ingrediente_mostrar.html"
+    context_object_name = "ingrediente"
+    model = Ingrediente
 
-        if categoria_seleccionada:
-            ingredientes = ingredientes.filter(categoria=categoria_seleccionada)
+class IngredienteEditarView(UpdateView):
+    template_name = "app/ingrediente_editar.html"
+    model = Ingrediente
+    form_class = IngredienteForm
+    success_url = reverse_lazy("ingredientes_lista")
+    context_object_name = "ingrediente"
 
-        if mercado_habitual:
-            ingredientes = ingredientes.filter(mercado_habitual=mercado_habitual)
+class IngredienteEliminarView(DeleteView):
+    template_name = "app/ingrediente_eliminar.html"
+    model = Ingrediente
+    success_url = reverse_lazy("ingredientes_lista")
 
-        if inicial_seleccionada:
-            ingredientes = ingredientes.filter(nombre__istartswith=inicial_seleccionada)
-
-    return render(request, "app/ingredientes_lista.html", {'ingredientes': ingredientes,'form': form})
-
-
-def ingrediente_crud(request, pk):
-    ingrediente = get_object_or_404(Ingrediente, pk=pk)
-    
-    if request.method == 'POST':
-        crud_form = CrudForm(request.POST, instance=ingrediente)
-
-        if crud_form.is_valid():
-            crud_form.save()
-            return redirect('ingredientes_lista')
-    else:
-        crud_form = CrudForm(instance=ingrediente)
-        
-    return render(request, "app/ingrediente_crud.html", {'ingrediente': ingrediente,'crud_form': crud_form,'editando': True})
-
-def ingrediente_eliminar(request, pk):
-    ingrediente = get_object_or_404(Ingrediente, pk=pk)
-
-    if request.method == 'POST':
-        ingrediente.delete()
-        return redirect('ingredientes_lista') 
-    
-    return render(request, 'app/confirmar_borrado.html', {'ingrediente': ingrediente})
-
-def ingrediente_nuevo(request):
-    formularioCrud = formset_factory(CrudForm, extra=3)
-    
-    if request.method == 'POST':
-        formularios = formularioCrud(request.POST)
-        if formularios.is_valid():
-            for form in formularios:
-                if form.has_changed():
-                    form.save()
-            return redirect('ingredientes_lista')    
-        
-    else:
-        formularios = formularioCrud()
-
-    return render(request, "app/ingrediente_nuevo.html", {"formularios": formularios})
-
+class IngredienteNuevoView(CreateView):
+    template_name = "app/ingrediente_nuevo.html"
+    model = Ingrediente
+    form_class = IngredienteForm
+    success_url = reverse_lazy("ingredientes_lista")
 
 def relaciones(request):
     recetas = Receta.objects.all()
-    ingredientes =  Ingrediente.objects.all()
-    return render(request, "app/relaciones.html", {"recetas":recetas,"ingredientes":ingredientes})
+    ingredientes = Ingrediente.objects.all()
+    return render(
+        request,
+        "app/relaciones.html",
+        {"recetas": recetas, "ingredientes": ingredientes},
+    )
 
 def receta(request, pk):
     receta = get_object_or_404(Receta, pk=pk)
-    ingredientes =  Ingrediente.objects.exclude(recetas = receta)
+    ingredientes = Ingrediente.objects.exclude(recetas=receta)
     formulario = IngredienteRecetaForm(request.POST)
-    formulario.fields['ingrediente'].queryset = ingredientes
+    formulario.fields["ingrediente"].queryset = ingredientes
     ingrediente_receta = IngredienteReceta.objects.filter(receta=receta)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         ingrediente_receta = formulario.save(commit=False)
         ingrediente_receta.receta = receta
         ingrediente_receta.save()
-        return redirect('receta', pk=pk)
+        return redirect("receta", pk=pk)
     else:
         formulario = IngredienteRecetaForm()
 
-    formulario.fields['ingrediente'].queryset = ingredientes
-    contexto = {'receta': receta, "ingredientes":ingredientes, 'ingrediente_receta':ingrediente_receta, 'formulario':formulario}
-    return render(request, 'app/receta.html', contexto)
-
+    formulario.fields["ingrediente"].queryset = ingredientes
+    contexto = {
+        "receta": receta,
+        "ingredientes": ingredientes,
+        "ingrediente_receta": ingrediente_receta,
+        "formulario": formulario,
+    }
+    return render(request, "app/receta.html", contexto)
 
 # def eliminar_ingrediente_receta(request, pk):
 #     receta = get_object_or_404(Receta, pk=pk)
@@ -99,5 +75,5 @@ def receta(request, pk):
 #         ingrediente = request.POST.get('ingrediente_id')
 #         receta.ingredientes.add(ingrediente)
 #         return redirect('receta', pk=pk)
-    
+
 #     return render(request, 'app/receta.html', {'receta': receta,"ingredientes":ingredientes})

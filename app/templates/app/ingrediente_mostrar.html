@@ -1,0 +1,28 @@
+{% extends "app/base.html" %}
+
+{% block titulo%}Lista de Ingredientes{% endblock%}
+
+{% block contenido %}
+<h3>Detalle del Ingrediente: </h3>
+<table>
+    <tr>
+        <th>ID</th>
+        <td>{{ ingrediente.id }}</td>
+    </tr>
+    <tr>
+        <th>Nombre</th>
+        <td>{{ ingrediente.nombre }}</td>
+    </tr>
+    <tr>
+        <th>Categoría</th>
+        <td>{{ ingrediente.categoria.nombre }}</td>
+    </tr>
+    <tr>
+        <th>Mercado Habitual</th>
+        <td>{{ ingrediente.get_mercado_habitual_display }}</td>
+    </tr>
+    <tr>
+        <th>Descripción</th>
+        <td>{{ ingrediente.descripcion }}</td>
+    </tr>
+{% endblock contenido %}

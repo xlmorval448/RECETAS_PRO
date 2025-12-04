@@ -22,11 +22,11 @@ class FiltroIngredientesForm(forms.ModelForm):
         max_length=1,
         required=False,
     )
-    
-class CrudForm(forms.ModelForm):
+
+class IngredienteForm(forms.ModelForm):
     class Meta:
         model = Ingrediente
-        fields = ["nombre", "categoria", "mercado_habitual", "descripcion"] 
+        fields = ["nombre", "categoria", "mercado_habitual", "descripcion"]
 
 class IngredienteRecetaForm(forms.ModelForm):
     class Meta:
